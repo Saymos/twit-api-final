@@ -15,24 +15,37 @@ import com.project.twitapi.repositories.UserRepository;
 @Service
 public class ServiceImplUtil {
 	
-	public User checkUserExists(UserRepository userRepo, String id) {
+	public User getUserIfUserExists(UserRepository userRepo, String id) {
 		Optional<User> optUser = userRepo.findById(id);
 		optUser.orElseThrow(() -> new EntryNotFoundException("User with Id: " +id));
 		return optUser.get();
-		
 	}
 	
-	public Twit checkTwitExists(TwitRepository twitRepo, String id) {
+	public Twit getTwitIfTwitExists(TwitRepository twitRepo, String id) {
 		Optional<Twit> optTwit = twitRepo.findById(id);
 		optTwit.orElseThrow(() -> new EntryNotFoundException("Twit with Id: " + id));
 		return optTwit.get();
 		 
 	}
 	
-	public Response checkResponseExists(ResponseRepository responseRepo, String id) {
+	public Response getRepsonseIfResponseExists(ResponseRepository responseRepo, String id) {
 		Optional<Response> optResponse = responseRepo.findById(id);
 		optResponse.orElseThrow(() -> new EntryNotFoundException("Response with Id: " + id));
 		return optResponse.get();
 	}
 
+	public boolean checkTwitExists(TwitRepository twitRepo, String id) {
+		Optional<Twit> optTwit = twitRepo.findById(id);
+		return optTwit.isPresent();
+	}
+	
+	public boolean checkUserExists(UserRepository userRepo, String id) {
+		Optional<User> optUser = userRepo.findById(id);
+		return optUser.isPresent();
+	}
+	
+	public boolean checkResponseExists(ResponseRepository ResponseRepo, String id) {
+		Optional<Response> optResponse = ResponseRepo.findById(id);
+		return optResponse.isPresent();
+	}
 }

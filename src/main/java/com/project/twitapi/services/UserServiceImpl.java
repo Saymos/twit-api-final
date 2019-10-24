@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User getUser(String id) {
-		return util.checkUserExists(userRepo, id);
+		return util.getUserIfUserExists(userRepo, id);
 	}
 
 	public User createUser(User user) {
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void addFollower(String id, String followerUserId) {
-		User user = util.checkUserExists(userRepo, id);
+		User user = util.getUserIfUserExists(userRepo, id);
 		
 		if (user.getFollowersUserId() == null) {
 			user.setFollowersUserId(new ArrayList<String>());
@@ -68,22 +68,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void removeFollower(String id, String followerUserId) {
-		User user = util.checkUserExists(userRepo, id);
+		User user = util.getUserIfUserExists(userRepo, id);
 		user.getFollowersUserId().remove(followerUserId);
 		userRepo.save(user);
 	}
 
 	public void addTwit(String id, String twitId) {
-		User user = util.checkUserExists(userRepo, id);
-		Twit twit = util.checkTwitExists(twitRepo, twitId);
+		User user = util.getUserIfUserExists(userRepo, id);
+		Twit twit = util.getTwitIfTwitExists(twitRepo, twitId);
 		user.getTwits().add(twit);
 		userRepo.save(user);
 	}
 
 	public void removeTwitFromUser(String id, String twitId) {
 		
-		User user = util.checkUserExists(userRepo, id);
-		util.checkTwitExists(twitRepo, twitId);
+		User user = util.getUserIfUserExists(userRepo, id);
+		util.getTwitIfTwitExists(twitRepo, twitId);
 		if (user.getTwits().stream().filter(t -> t.getId().equalsIgnoreCase(twitId)) != null) {
 			user.getTwits().removeIf(t -> t.getId().equalsIgnoreCase(twitId));
 			userRepo.save(user);
@@ -93,15 +93,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public List<Twit> getUserTwits(String id) {
-		User user = util.checkUserExists(userRepo, id);
+		User user = util.getUserIfUserExists(userRepo, id);
 		return user.getTwits();
 	}
 
 	public List<User> getFollowers(String id) {
-		User user = util.checkUserExists(userRepo, id);
+		User user = util.getUserIfUserExists(userRepo, id);
 		List<User> followerList = new ArrayList<User>();
 		for (String followerId : user.getFollowersUserId()) {
-			User follower = util.checkUserExists(userRepo, followerId);
+			User follower = util.getUserIfUserExists(userRepo, followerId);
 			followerList.add(follower);
 		}
 		return followerList;

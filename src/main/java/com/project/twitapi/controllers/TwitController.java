@@ -60,4 +60,10 @@ public class TwitController {
 		List<Response> list = twitService.getResponsesOnTwit(id);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
+	
+	@PutMapping("addLike/{id}")
+	public ResponseEntity<?> addLike(@PathVariable String id, @RequestBody String userId) {
+		twitService.addLike(id, userId);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
+	}
 }

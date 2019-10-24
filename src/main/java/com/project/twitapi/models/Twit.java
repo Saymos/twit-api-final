@@ -19,4 +19,5 @@ public class Twit {
 	
 	private String twit;
 	private List<Response> responses = new ArrayList<Response>();
+	private List<String> likes = new ArrayList<String>();
 }

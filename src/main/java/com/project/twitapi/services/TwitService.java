@@ -16,5 +16,5 @@ public interface TwitService {
 	public void addResponse(String id, String responseId);
 	public void removeResponse(String id, String responseId);
 	public List<Response> getResponsesOnTwit(String id);
-	
+	public void addLike(String id, String userId);
 }

@@ -23,7 +23,7 @@ public class ResponseServiceImpl implements ResponseService {
 	private UserRepository userRepo;
 
 	public Response getResponse(String id) {
-		return util.checkResponseExists(responseRepo, id);
+		return util.getRepsonseIfResponseExists(responseRepo, id);
 	}
 
 	public Response createResponse(Response response) {
