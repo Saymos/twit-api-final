@@ -72,7 +72,8 @@ public class TwitServiceImpl implements TwitService {
 	
 	public void addLike(String id, String userId) {
 		Twit twit = util.getTwitIfTwitExists(twitRepo, id);
-		if (util.checkUserExists(userRepo, userId)) {
+		util.checkUserExists(userRepo, userId);
+		if (!twit.getLikes().contains(userId)) {
 			twit.getLikes().add(userId);
 			twitRepo.save(twit);
 		} else {
